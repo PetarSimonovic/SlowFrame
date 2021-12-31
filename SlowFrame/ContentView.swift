@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var frames = [Image]()
     @State private var inputFrames = [UIImage?]()
     @State private var frame = 0
+    @State private var playing = false
 
 
     var body: some View {
@@ -23,17 +24,26 @@ struct ContentView: View {
             image?
                 .resizable()
                 .scaledToFit()
-            Button("Select image") {
-                showingImagePicker = true
+            HStack {
+                Button("Select image") {
+                    showingImagePicker = true
+                }
             }
-            Button("Cycle images") {
-                changeImage()
+            Button(playing ? "Stop" : "Play") {
+                print("Play button pressed")
+                if playing { playing = false } else {
+                    playing = true
+                    playTimeLapse()
+                    
+                }
             }
         }
         .onChange(of: inputFrames) { _ in processFrames()}
+        .onChange(of: frame) {_ in playTimeLapse()}
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: $inputImage, inputFrames: $inputFrames)
         }
+        
     
     }
     
@@ -48,6 +58,7 @@ struct ContentView: View {
         print("Frames converted")
         print(frames.count)
         print(frames)
+        image = frames[0]
     }
     
         
@@ -64,16 +75,19 @@ struct ContentView: View {
         
     }
     
-    func changeImage() {
-        if frames.isEmpty { return }
-        image = frames[frame]
-        print("Frames count: \(frames.count), frame\(frame)")
-        frame += 1
-        if frame >= frames.count {
-            frame = 0
+    func playTimeLapse() {
+        if playing {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            print("In delay")
+            frame += 1
+            image = frames[frame]
+            if frame >= frames.count - 1 {frame = 0}
         }
+        
+    }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
