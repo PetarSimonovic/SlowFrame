@@ -15,17 +15,22 @@ struct ImagePicker: UIViewControllerRepresentable {
         
     class Coordinator: NSObject, PHPickerViewControllerDelegate {
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+            print("Here!")
             // Tell the picker to go away
             picker.dismiss(animated: true)
 
             // Exit if no selection was made
-            guard let provider = results.first?.itemProvider else { return }
+            if results.isEmpty { return }
 
             // If this has an image we can use, use it
+            for result in results {
+            let provider = result.itemProvider
             if provider.canLoadObject(ofClass: UIImage.self) {
                 provider.loadObject(ofClass: UIImage.self) { image, _ in
                     self.parent.image = image as? UIImage
+                    self.parent.inputFrames.append(image as! UIImage)
                 }
+            }
             }
         }
         
@@ -37,6 +42,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
     
     @Binding var image: UIImage?
+    @Binding var inputFrames: [UIImage?]
 
     
     func makeCoordinator() -> Coordinator {
@@ -46,9 +52,12 @@ struct ImagePicker: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
         config.filter = .images
+        config.selectionLimit = 0
         
         let picker = PHPickerViewController(configuration: config)
         picker.delegate = context.coordinator
+        print("Returning picker")
+        print(picker)
         return picker
         
     }
