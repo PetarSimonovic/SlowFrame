@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var inputFrames = [UIImage?]()
     @State private var frame = 0
     @State private var playing = false
+    @State private var speed: Double = 0.5
 
 
     var body: some View {
@@ -25,19 +26,26 @@ struct ContentView: View {
                 .resizable()
                 .scaledToFit()
             HStack {
-                Button("Select image") {
+                Button("Add images") {
                     showingImagePicker = true
                 }
-            }
-            Button(playing ? "Stop" : "Play") {
-                print("Play button pressed")
-                if playing { playing = false } else {
-                    playing = true
-                    playTimeLapse()
-                    
+                Button(playing ? "Stop" : "Play") {
+                    print("Play button pressed")
+                    if playing { playing = false } else {
+                        playing = true
+                        playTimeLapse()
+                        
+                    }
                 }
             }
-        }
+            VStack {
+                Slider(
+                          value: $speed,
+                          in: 0...5
+                    )
+                Text("\(speed)")
+            }
+                    }
         .onChange(of: inputFrames) { _ in processFrames()}
         .onChange(of: frame) {_ in playTimeLapse()}
         .sheet(isPresented: $showingImagePicker) {
@@ -77,7 +85,7 @@ struct ContentView: View {
     
     func playTimeLapse() {
         if playing {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + speed) {
             print("In delay")
             frame += 1
             image = frames[frame]
