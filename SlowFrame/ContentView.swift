@@ -29,13 +29,18 @@ struct ContentView: View {
                 Button("Add images") {
                     showingImagePicker = true
                 }
-                Button(playing ? "Stop" : "Play") {
-                    print("Play button pressed")
-                    if playing { playing = false } else {
-                        playing = true
-                        playTimeLapse()
-                        
-                    }
+                Button("Reset") {
+                    inputFrames.removeAll()
+                    frames.removeAll()
+                    playing = false
+                }
+            }
+            Button(playing ? "Stop" : "Preview") {
+                print("Play button pressed")
+                if playing { playing = false } else {
+                    playing = true
+                    playTimeLapse()
+                    
                 }
             }
             VStack {
@@ -49,7 +54,7 @@ struct ContentView: View {
         .onChange(of: inputFrames) { _ in processFrames()}
         .onChange(of: frame) {_ in playTimeLapse()}
         .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $inputImage, inputFrames: $inputFrames)
+            ImagePicker(inputFrames: $inputFrames)
         }
         
     
@@ -89,7 +94,7 @@ struct ContentView: View {
             print("In delay")
             frame += 1
             image = frames[frame]
-            if frame >= frames.count - 1 {frame = 0}
+            if frame >= frames.count - 1 || frame >= 30 {frame = 0}
         }
         
     }
