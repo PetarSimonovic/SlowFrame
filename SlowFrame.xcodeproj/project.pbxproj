@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D74FF4E2781F24C00DEEB64 /* TimelapseCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D74FF4D2781F24C00DEEB64 /* TimelapseCreator.swift */; };
 		0DEA3218277C7E8B0012081C /* SlowFrameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEA3217277C7E8B0012081C /* SlowFrameApp.swift */; };
 		0DEA321A277C7E8B0012081C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEA3219277C7E8B0012081C /* ContentView.swift */; };
 		0DEA321C277C7E8D0012081C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DEA321B277C7E8D0012081C /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D74FF4D2781F24C00DEEB64 /* TimelapseCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelapseCreator.swift; sourceTree = "<group>"; };
 		0DEA3214277C7E8B0012081C /* SlowFrame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlowFrame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DEA3217277C7E8B0012081C /* SlowFrameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowFrameApp.swift; sourceTree = "<group>"; };
 		0DEA3219277C7E8B0012081C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				0DEA3227277DF58F0012081C /* Example.jpeg */,
 				0DEA321D277C7E8D0012081C /* Preview Content */,
 				0DEA3225277C7F860012081C /* ImagePicker.swift */,
+				0D74FF4D2781F24C00DEEB64 /* TimelapseCreator.swift */,
 			);
 			path = SlowFrame;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DEA3226277C7F860012081C /* ImagePicker.swift in Sources */,
+				0D74FF4E2781F24C00DEEB64 /* TimelapseCreator.swift in Sources */,
 				0DEA321A277C7E8B0012081C /* ContentView.swift in Sources */,
 				0DEA3218277C7E8B0012081C /* SlowFrameApp.swift in Sources */,
 			);

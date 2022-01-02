@@ -12,6 +12,11 @@ import SwiftUI
 
 
 struct ImagePicker: UIViewControllerRepresentable {
+    
+    @Binding var inputFrames: [UIImage?]
+
+    @Binding var imagePickerResult: Int
+
         
     class Coordinator: NSObject, PHPickerViewControllerDelegate {
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
@@ -23,6 +28,7 @@ struct ImagePicker: UIViewControllerRepresentable {
             if results.isEmpty { return }
 
             // If this has an image we can use, use it
+            self.parent.imagePickerResult = results.count
             for result in results {
             let provider = result.itemProvider
             if provider.canLoadObject(ofClass: UIImage.self) {
@@ -40,7 +46,6 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
     }
     
-    @Binding var inputFrames: [UIImage?]
 
     
     func makeCoordinator() -> Coordinator {

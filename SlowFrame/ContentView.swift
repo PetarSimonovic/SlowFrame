@@ -18,6 +18,9 @@ struct ContentView: View {
     @State private var frame = 0
     @State private var playing = false
     @State private var speed: Double = 0.5
+    @State private var imagePickerResult: Int = 0
+   
+
 
 
     var body: some View {
@@ -39,7 +42,7 @@ struct ContentView: View {
                 print("Play button pressed")
                 if playing { playing = false } else {
                     playing = true
-                    playTimeLapse()
+                    playTimeLapsePreview()
                     
                 }
             }
@@ -49,23 +52,39 @@ struct ContentView: View {
                           in: 0...5
                     )
                 Text("\(speed)")
+                Button("Create Timelapse") {
+                    print("Creating timelapse")
+                    let timelapseCreator = TimelapseCreator(speed: speed, inputFrames: inputFrames)
+                    print(timelapseCreator.setURL())
+                    
+                }
+
             }
+            
                     }
-        .onChange(of: inputFrames) { _ in processFrames()}
-        .onChange(of: frame) {_ in playTimeLapse()}
+        .onChange(of: inputFrames) { _ in processPreviewFrames()}
+        .onChange(of: frame) {_ in playTimeLapsePreview()}
         .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(inputFrames: $inputFrames)
+            ImagePicker(inputFrames: $inputFrames, imagePickerResult: $imagePickerResult)
         }
         
     
     }
     
-    func processFrames() {
+    func processPreviewFrames() {
+        print("Not ready to process")
+        if inputFrames.isEmpty || inputFrames.count < imagePickerResult  {return}
         print("Processing frames")
-        if inputFrames.isEmpty {return}
         frames.removeAll()
-        for inputFrame in inputFrames {
-            let newFrame = Image(uiImage: inputFrame!)
+        var previewFrames = 0
+        if inputFrames.count < 30 {
+            previewFrames = inputFrames.count
+            
+        } else
+        { previewFrames = 30
+        }
+        for inputFrame in 0 ... previewFrames  {
+            let newFrame = Image(uiImage: inputFrames[inputFrame]!)
             frames.append(newFrame)
         }
         print("Frames converted")
@@ -88,7 +107,7 @@ struct ContentView: View {
         
     }
     
-    func playTimeLapse() {
+    func playTimeLapsePreview() {
         if playing {
         DispatchQueue.main.asyncAfter(deadline: .now() + speed) {
             print("In delay")
