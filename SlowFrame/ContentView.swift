@@ -55,7 +55,7 @@ struct ContentView: View {
                 Button("Create Timelapse") {
                     print("Creating timelapse")
                     let timelapseCreator = TimelapseCreator(speed: speed, inputFrames: inputFrames)
-                    print(timelapseCreator.setURL())
+                    print(timelapseCreator.build())
                     
                 }
 

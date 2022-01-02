@@ -32,6 +32,17 @@ struct TimelapseCreator {
             return documentDirectory.appendingPathComponent("\(UUID()).mp4")
     }
     
+    func build() {
+        
+        let outputURL = setURL()
+        guard let timelapseWriter = try? AVAssetWriter(outputURL: outputURL, fileType: AVFileType.mp4) else {
+                fatalError("AVAssetWriter error")
+            }
+        
+         print(timelapseWriter)
+
+    }
+    
     
     
 }
